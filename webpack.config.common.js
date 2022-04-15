@@ -3,7 +3,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-const config = {
+module.exports= {
   entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "public"),
@@ -12,11 +12,21 @@ const config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "index.html",
+      template: "src/index.html",
     }),
   ],
   module: {
     rules: [
+      {
+        test: /\.m?js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+      },
       {
         test: /\.(ts|tsx)$/i,
         loader: "ts-loader",
